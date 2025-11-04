@@ -1,12 +1,17 @@
 import React from "react"
+import { languages } from "./languages"
 /**
  * Goal: Build out the main parts of our app
  * 
- * Challenge: Build a status section below the header.
- * For now, you can just hard-code in the styles for
- * a winning game, and we'll make it more dynamic
- * later.
+ * Challenge: Create the language chips. Use the
+ * `languages.js` file to pull in the array of
+ * languages to use, which contains the language
+ * name, background color, and text color.
+ * 
+ * Hint for layout: use a flex container that can wrap
+ * to layout the languages.
  */
+
 
 
 export default function Hangman() {
@@ -19,6 +24,20 @@ export default function Hangman() {
             <section className="game-status">
                 <h2>You Won!</h2>
                 <p>Well done!</p>
+            </section>
+            <section className="languages-container">
+                {languages.map((lang) => (
+                    <div
+                        key={lang.name}
+                        className="language-chip"
+                        style={{
+                            backgroundColor: lang.backgroundColor,
+                            color: lang.color,
+                        }}
+                    >
+                        {lang.name}
+                    </div>
+                ))}
             </section>
         </main>
     )
