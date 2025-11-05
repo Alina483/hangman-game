@@ -1,20 +1,29 @@
-import React from "react"
+import React, { useState } from "react"
 import { languages } from "./languages"
 /**
  * Goal: Build out the main parts of our app
  * 
- * Challenge: Create the language chips. Use the
- * `languages.js` file to pull in the array of
- * languages to use, which contains the language
- * name, background color, and text color.
- * 
- * Hint for layout: use a flex container that can wrap
- * to layout the languages.
+ * Challenge: 
+ * 1. Save a "currentWord" in state. Initialize as "react".
+ * 2. Map over the letters of the word (you'll need to turn 
+ *    the string into an array of letters first) and display
+ *    each one as a <span>. Capitalize the letters when
+ *    displaying them.
+ * 3. Style to look like the design. You can get the underline 
+ *    effect on the box using `border-bottom`.
  */
 
 
 
 export default function Hangman() {
+    const [currentWord, setCurrentWord] = useState("react");
+
+    const letters = currentWord.split("").map((letter, index) => (
+        <span key={index} style={{ textTransform: "capitalize", borderBottom: "2px solid #F9F4DA", margin: "0 2px" }}>
+            {letter}
+        </span>
+    ));
+
     return (
         <main>
             <header>
@@ -38,6 +47,9 @@ export default function Hangman() {
                         {lang.name}
                     </div>
                 ))}
+            </section>
+            <section className="current-word">
+                {letters}   
             </section>
         </main>
     )
