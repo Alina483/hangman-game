@@ -52,6 +52,7 @@ section.game-status > h2 {
     gap: 5px;
     justify-content: center;
     max-width: 600px;
+    margin-top: 50px;
 }
 
 .language-chip {
@@ -60,4 +61,25 @@ section.game-status > h2 {
     text-align: center;
     width: fit-content;
     padding: 5px 10px;
+}
+
+.letter-box{
+    width: 60px;
+    height: 60px;
+    background-color: #323232;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    text-transform: capitalize;
+    border-bottom: 2px solid #F9F4DA;
+    margin: 0 2px;
+    border-radius: 3px;
+}
+
+.current-word {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    margin-top: 30px;
 }

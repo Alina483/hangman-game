@@ -19,7 +19,7 @@ export default function Hangman() {
     const [currentWord, setCurrentWord] = useState("react");
 
     const letters = currentWord.split("").map((letter, index) => (
-        <span key={index} style={{ textTransform: "capitalize", borderBottom: "2px solid #F9F4DA", margin: "0 2px" }}>
+        <span key={index} className="letter-box">
             {letter}
         </span>
     ));
