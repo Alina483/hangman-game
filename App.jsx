@@ -19,14 +19,24 @@ export default function Hangman() {
 
     const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
+    const [guessedLetters, setGuessedLetters] = useState([]);
+
+    const handleLetterClick = (letter) => {
+        setGuessedLetters((prev) => [...prev, letter]);
+    };
+
+    const isLetterGuessed = (letter) => {
+        return guessedLetters.includes(letter);
+    };
+
     const letters = currentWord.split("").map((letter, index) => (
         <span key={index} className="letter-box">
-            {letter}
+            {isLetterGuessed(letter) ? letter : "_"}
         </span>
     ));
 
      const keyboardElements = alphabet.split("").map(letter => (
-        <button>{letter.toUpperCase()}</button>
+        <button onClick={() => handleLetterClick(letter)}>{letter.toUpperCase()}</button>
     ))
 
     return (
