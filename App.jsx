@@ -1,12 +1,16 @@
 import React, { useState } from "react"
 import { languages } from "./languages"
 /**
- * Goal: Build out the main parts of our app
+ * Goal: Allow the user to start guessing the letters
  * 
- * Challenge: 
- * Display the keyboard ⌨️. Use <button>s for each letter
- * since it'll need to be clickable and tab-accessible.
+ * Challenge: Create a new array in state to hold user's
+ * guessed letters. When the user chooses a letter, add
+ * that letter to this state array.
+ * 
+ * Don't worry about whether it was a right or wrong 
+ * guess yet.
  */
+
 
 
 
@@ -14,7 +18,7 @@ export default function Hangman() {
     const [currentWord, setCurrentWord] = useState("react");
 
     const alphabet = "abcdefghijklmnopqrstuvwxyz";
-    
+
     const letters = currentWord.split("").map((letter, index) => (
         <span key={index} className="letter-box">
             {letter}
@@ -55,6 +59,7 @@ export default function Hangman() {
             <section className="keyboard">
                 {keyboardElements}
             </section>
+            <button className="new-game">New Game</button>
         </main>
     )
 }
