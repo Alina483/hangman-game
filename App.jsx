@@ -1,15 +1,18 @@
 import React, { useState } from "react"
 import { languages } from "./languages"
+
+
 /**
  * Goal: Allow the user to start guessing the letters
  * 
- * Challenge: Create a new array in state to hold user's
- * guessed letters. When the user chooses a letter, add
- * that letter to this state array.
+ * Challenge: Update the keyboard when a letter is right
+ * or wrong.
  * 
- * Don't worry about whether it was a right or wrong 
- * guess yet.
+ * Bonus: use the `clsx` package to easily add conditional 
+ * classNames to the keys of the keyboard. Check the docs 
+ * to learn how to use it 📖
  */
+
 
 
 
@@ -36,7 +39,7 @@ export default function Hangman() {
     ));
 
      const keyboardElements = alphabet.split("").map(letter => (
-        <button onClick={() => handleLetterClick(letter)}>{letter.toUpperCase()}</button>
+        <button onClick={() => handleLetterClick(letter)} className={isLetterGuessed(letter) ? "guessed" : "not-guessed"}>{letter.toUpperCase()}</button>
     ))
 
     return (
