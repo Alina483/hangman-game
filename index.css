@@ -105,15 +105,11 @@ section.game-status > h2 {
     margin: 6px;
 }
 
-.keyboard > button:active {
-    background-color: #10A95B;
-}
-
-.keyboard > button.guessed {
+section.keyboard > button.correct {
     background-color: #1c8300;
 }
 
-.keyboard > button.not-guessed {       
+section.keyboard > button.wrong {
     background-color: #c60000;
 }
 
@@ -126,6 +122,6 @@ button.new-game {
     padding: 6px 12px;
     display: block;
     margin-inline: auto;
-    cursor: pointer;
+    cursor: pointer;    
     margin-top: 10px;
 }

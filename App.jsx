@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { languages } from "./languages"
+import clsx from "clsx";
 
 
 /**
@@ -28,19 +29,31 @@ export default function Hangman() {
         setGuessedLetters((prev) => [...prev, letter]);
     };
 
-    const isLetterGuessed = (letter) => {
-        return guessedLetters.includes(letter);
-    };
-
     const letters = currentWord.split("").map((letter, index) => (
         <span key={index} className="letter-box">
-            {isLetterGuessed(letter) ? letter : "_"}
+            {guessedLetters.includes(letter) ? letter : "_"}
         </span>
     ));
 
-     const keyboardElements = alphabet.split("").map(letter => (
-        <button onClick={() => handleLetterClick(letter)} className={isLetterGuessed(letter) ? "guessed" : "not-guessed"}>{letter.toUpperCase()}</button>
-    ))
+    const keyboardElements = alphabet.split("").map(letter => {
+        const isGuessed = guessedLetters.includes(letter)
+        const isCorrect = isGuessed && currentWord.includes(letter)
+        const isWrong = isGuessed && !currentWord.includes(letter)
+        const className = clsx({
+            correct: isCorrect,
+            wrong: isWrong
+        })
+        
+        return (
+            <button
+                className={className}
+                key={letter}
+                onClick={() => handleLetterClick(letter)}
+            >
+                {letter.toUpperCase()}
+            </button>
+        )
+    })
 
     return (
         <main>
