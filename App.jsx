@@ -4,11 +4,18 @@ import clsx from "clsx";
 import { getFarewellText } from "./utils";
 
 
-/**Challenge: Disable the keyboard when the game is over/** */
+ /* Challenge: Choose a random word from a list of words
+ * 
+ * 1. Create a new function in utils.js that chooses a random
+ *    word from the imported array of words and returns it
+ * 2. import the function into this file
+ * 3. Figure out where to use that function.
+ */
 
 export default function Hangman() {
     const [currentWord, setCurrentWord] = useState("react");
     const [guessedLetters, setGuessedLetters] = useState([]);
+    const numGuessesLeft = languages.length - 1
     const wrongGuessCount = guessedLetters.filter(letter => !currentWord.includes(letter)).length;
     const isGameWon = currentWord.split("").every(letter => guessedLetters.includes(letter))
     const isGameLost = wrongGuessCount >= languages.length - 1
@@ -44,6 +51,8 @@ export default function Hangman() {
                 key={letter}
                 onClick={() => handleLetterClick(letter)}
                 disabled={isGameOver}
+                aria-disabled={guessedLetters.includes(letter)}
+                aria-label={`Letter ${letter}`}
             >
                 {letter.toUpperCase()}
             </button>
@@ -106,7 +115,7 @@ export default function Hangman() {
                 <h1>Hangman</h1>
                 <p>Guess the word in under 8 attempts to keep the programming world safe from Assembly!</p>
             </header>
-            <section className={gameStatusClass}>
+            <section aria-live="polite" role="status" className={gameStatusClass}>
                 {renderGameStatus()}
             </section>
             <section className="languages-container">
@@ -114,6 +123,22 @@ export default function Hangman() {
             </section>
             <section className="current-word">
                 {letters}   
+            </section>
+            <section 
+                className="sr-only" 
+                aria-live="polite" 
+                role="status"
+            >
+                <p>
+                    {currentWord.includes(lastGuessedLetter) ? 
+                        `Correct! The letter ${lastGuessedLetter} is in the word.` : 
+                        `Sorry, the letter ${lastGuessedLetter} is not in the word.`
+                    }
+                    You have {numGuessesLeft} attempts left.
+                </p>
+                <p>Current word: {currentWord.split("").map(letter => 
+                guessedLetters.includes(letter) ? letter + "." : "blank.")
+                .join(" ")}</p>
             </section>
             <section className="keyboard">
                 {keyboardElements}
