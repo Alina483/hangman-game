@@ -4,30 +4,30 @@ import clsx from "clsx";
 
 
 /**
- * Goal: Allow the user to start guessing the letters
+ * Goal: Add in the incorrect guesses mechanism to the game
  * 
- * Challenge: Update the keyboard when a letter is right
- * or wrong.
- * 
- * Bonus: use the `clsx` package to easily add conditional 
- * classNames to the keys of the keyboard. Check the docs 
- * to learn how to use it 📖
+ * Challenge:
+ * 1. Create a variable `isGameOver` which evaluates to `true`
+ *    if the user has guessed incorrectly 8 times. Consider how
+ *    we might make this more dynamic if we were ever to add or
+ *    remove languages from the languages array.
+ * 2. Conditionally render the New Game button only if the game
+ *    is over.
  */
-
-
-
-
 
 export default function Hangman() {
     const [currentWord, setCurrentWord] = useState("react");
+    const [guessedLetters, setGuessedLetters] = useState([]);
+
+
 
     const alphabet = "abcdefghijklmnopqrstuvwxyz";
-
-    const [guessedLetters, setGuessedLetters] = useState([]);
 
     const handleLetterClick = (letter) => {
         setGuessedLetters((prev) => [...prev, letter]);
     };
+
+    const wrongGuessCount = guessedLetters.filter(letter => !currentWord.includes(letter)).length;
 
     const letters = currentWord.split("").map((letter, index) => (
         <span key={index} className="letter-box">
@@ -55,6 +55,25 @@ export default function Hangman() {
         )
     })
 
+    const languageElements = languages.map((lang, index) => {
+        const isLanguageLost = index < wrongGuessCount
+        const styles = {
+            backgroundColor: lang.backgroundColor,
+            color: lang.color
+        }
+        const className = clsx("chip", isLanguageLost && "lost")
+        return (
+            <span
+                className={className}
+                style={styles}
+                key={lang.name}
+            >
+                {lang.name}
+            </span>
+        )
+    })
+
+
     return (
         <main>
             <header>
@@ -66,18 +85,7 @@ export default function Hangman() {
                 <p>Well done!</p>
             </section>
             <section className="languages-container">
-                {languages.map((lang) => (
-                    <div
-                        key={lang.name}
-                        className="language-chip"
-                        style={{
-                            backgroundColor: lang.backgroundColor,
-                            color: lang.color,
-                        }}
-                    >
-                        {lang.name}
-                    </div>
-                ))}
+                {languageElements}
             </section>
             <section className="current-word">
                 {letters}   
