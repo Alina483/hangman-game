@@ -4,16 +4,7 @@ import clsx from "clsx";
 import { getFarewellText } from "./utils";
 
 
-/**
- * Challenge: Bid farewell to each programming language
- * as it gets erased from existance 👋😭
- * 
- * Use the `getFarewellText` function from the new utils.js
- * file to generate the text.
- * 
- * Check hint.md if you're feeling stuck, but do your best
- * to solve the challenge without the hint! 🕵️
- */
+/**Challenge: Disable the keyboard when the game is over/** */
 
 export default function Hangman() {
     const [currentWord, setCurrentWord] = useState("react");
@@ -24,7 +15,6 @@ export default function Hangman() {
     const isGameOver = isGameWon || isGameLost
     const lastGuessedLetter = guessedLetters[guessedLetters.length - 1]
     const isLastGuessIncorrect = lastGuessedLetter && !currentWord.includes(lastGuessedLetter)
-
 
     const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
@@ -53,6 +43,7 @@ export default function Hangman() {
                 className={className}
                 key={letter}
                 onClick={() => handleLetterClick(letter)}
+                disabled={isGameOver}
             >
                 {letter.toUpperCase()}
             </button>
