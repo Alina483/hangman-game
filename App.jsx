@@ -4,16 +4,14 @@ import clsx from "clsx";
 
 
 /**
- * Goal: Add in the incorrect guesses mechanism to the game
+ * Challenge: Bid farewell to each programming language
+ * as it gets erased from existance 👋😭
  * 
- * Challenge:
- * Conditionally render either the "won" or "lost" statuses
- * from the design, both the text and the styles, based on the
- * new derived variables.
+ * Use the `getFarewellText` function from the new utils.js
+ * file to generate the text.
  * 
- * Note: We always want the surrounding `section` to be rendered,
- * so only change the content inside that section. Otherwise the
- * content on the page would jump around a bit too much.
+ * Check hint.md if you're feeling stuck, but do your best
+ * to solve the challenge without the hint! 🕵️
  */
 
 export default function Hangman() {
@@ -34,7 +32,7 @@ export default function Hangman() {
     
     const letters = currentWord.split("").map((letter, index) => (
         <span key={index} className="letter-box">
-            {guessedLetters.includes(letter) ? letter : "_"}
+            {guessedLetters.includes(letter) ? letter : ""}
         </span>
     ));
 
@@ -76,6 +74,30 @@ export default function Hangman() {
         )
     })
 
+    const gameStatusClass = clsx("game-status", {
+        won: isGameWon,
+        lost: isGameLost
+    })
+
+    const gameStatus = () => {
+        if (isGameWon) {
+            return (
+                <>
+                    <h2>You Won!</h2>
+                    <p>Well done!</p>
+                </>
+            );
+        }
+        if (isGameLost) {
+            return (
+                <>
+                    <h2>You Lost!</h2>
+                    <p>The correct word was: {currentWord.toUpperCase()}</p>
+                </>
+            );
+        }
+    };
+
 
     return (
         <main>
@@ -83,9 +105,8 @@ export default function Hangman() {
                 <h1>Hangman</h1>
                 <p>Guess the word in under 8 attempts to keep the programming world safe from Assembly!</p>
             </header>
-            <section className="game-status">
-                <h2>You Won!</h2>
-                <p>Well done!</p>
+            <section className={gameStatusClass}>
+                {gameStatus()}
             </section>
             <section className="languages-container">
                 {languageElements}

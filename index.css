@@ -32,13 +32,21 @@ header > p {
 }
 
 section.game-status {
-    background-color: #10A95B;
     display: flex;
     flex-direction: column;
     align-items: center;
     color: #F9F4DA;
+    min-height: 60px;
     border-radius: 4px;
     margin-block: 30px;
+}
+
+section.game-status.won {
+    background-color: #10A95B;
+}
+
+section.game-status.lost {
+    background-color: #BA2A2A;
 }
 
 section.game-status > p {
@@ -98,6 +106,7 @@ span.chip.lost::before {
     border-bottom: 2px solid #F9F4DA;
     margin: 0 2px;
     border-radius: 3px;
+
 }
 
 .current-word {
@@ -105,6 +114,7 @@ span.chip.lost::before {
     gap: 4px;
     justify-content: center;
     margin-top: 30px;
+     color: #F9F4DA;
 }
 
 .keyboard {
