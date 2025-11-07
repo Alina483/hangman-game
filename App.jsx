@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { languages } from "./languages"
 import clsx from "clsx";
+import { getFarewellText } from "./utils";
 
 
 /**
@@ -21,6 +22,8 @@ export default function Hangman() {
     const isGameWon = currentWord.split("").every(letter => guessedLetters.includes(letter))
     const isGameLost = wrongGuessCount >= languages.length - 1
     const isGameOver = isGameWon || isGameLost
+    const lastGuessedLetter = guessedLetters[guessedLetters.length - 1]
+    const isLastGuessIncorrect = lastGuessedLetter && !currentWord.includes(lastGuessedLetter)
 
 
     const alphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -79,25 +82,32 @@ export default function Hangman() {
         lost: isGameLost
     })
 
-    const gameStatus = () => {
+    function renderGameStatus() {
+        if (!isGameOver && isLastGuessIncorrect) {
+            return (
+                <p className="farewell-message" >
+                    {getFarewellText(languages[wrongGuessCount - 1].name)}
+                </p>
+            )
+        }
         if (isGameWon) {
             return (
                 <>
-                    <h2>You Won!</h2>
-                    <p>Well done!</p>
+                    <h2>You win!</h2>
+                    <p>Well done! 🎉</p>
                 </>
-            );
-        }
+            )
+        } 
         if (isGameLost) {
             return (
                 <>
-                    <h2>You Lost!</h2>
-                    <p>The correct word was: {currentWord.toUpperCase()}</p>
+                    <h2>Game over!</h2>
+                    <p>You lose! Better start learning Assembly 😭</p>
                 </>
-            );
+            )
         }
-    };
-
+        return null
+    }
 
     return (
         <main>
@@ -106,7 +116,7 @@ export default function Hangman() {
                 <p>Guess the word in under 8 attempts to keep the programming world safe from Assembly!</p>
             </header>
             <section className={gameStatusClass}>
-                {gameStatus()}
+                {renderGameStatus()}
             </section>
             <section className="languages-container">
                 {languageElements}
