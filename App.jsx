@@ -1,19 +1,12 @@
 import { useState } from "react"
 import { languages } from "./languages"
 import clsx from "clsx";
-import { getFarewellText } from "./utils";
+import { getFarewellText, getRandomWord } from "./utils";
+import Confetti from "react-confetti";
 
-
- /* Challenge: Choose a random word from a list of words
- * 
- * 1. Create a new function in utils.js that chooses a random
- *    word from the imported array of words and returns it
- * 2. import the function into this file
- * 3. Figure out where to use that function.
- */
 
 export default function Hangman() {
-    const [currentWord, setCurrentWord] = useState("react");
+    const [currentWord, setCurrentWord] = useState(() =>getRandomWord());
     const [guessedLetters, setGuessedLetters] = useState([]);
     const numGuessesLeft = languages.length - 1
     const wrongGuessCount = guessedLetters.filter(letter => !currentWord.includes(letter)).length;
@@ -109,8 +102,14 @@ export default function Hangman() {
         return null
     }
 
+    function startNewGame() {
+        setCurrentWord(getRandomWord());
+        setGuessedLetters([]);
+    }
+
     return (
         <main>
+            {isGameWon && <Confetti />}
             <header>
                 <h1>Hangman</h1>
                 <p>Guess the word in under 8 attempts to keep the programming world safe from Assembly!</p>
@@ -143,7 +142,7 @@ export default function Hangman() {
             <section className="keyboard">
                 {keyboardElements}
             </section>
-            {isGameOver && <button className="new-game">New Game</button>}
+            {isGameOver && <button className="new-game" onClick={startNewGame}>New Game</button>}
         </main>
     )
 }
