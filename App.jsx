@@ -4,7 +4,12 @@ import clsx from "clsx";
 import { getFarewellText, getRandomWord } from "./utils";
 import Confetti from "react-confetti";
 
-
+/**
+ * 
+ * Display remaining guesses
+ * Display some other annimation when user lost (maybe rain or smth)
+ * Add timer
+ */
 export default function Hangman() {
     const [currentWord, setCurrentWord] = useState(() =>getRandomWord());
     const [guessedLetters, setGuessedLetters] = useState([]);
@@ -22,12 +27,17 @@ export default function Hangman() {
         setGuessedLetters((prev) => [...prev, letter]);
     };
 
-    
-    const letters = currentWord.split("").map((letter, index) => (
-        <span key={index} className="letter-box">
-            {guessedLetters.includes(letter) ? letter : ""}
-        </span>
-    ));
+    const letters= currentWord.split("").map((letter, index) => {
+        const shouldRevealLetter = isGameLost || guessedLetters.includes(letter)
+        const letterClassName = clsx(
+            isGameLost && !guessedLetters.includes(letter) && "missed-letter"
+        )
+        return (
+            <span key={index} className={letterClassName}>
+                {shouldRevealLetter ? letter.toUpperCase() : ""}
+            </span>
+        )
+    })
 
     const keyboardElements = alphabet.split("").map(letter => {
         const isGuessed = guessedLetters.includes(letter)
@@ -72,7 +82,8 @@ export default function Hangman() {
 
     const gameStatusClass = clsx("game-status", {
         won: isGameWon,
-        lost: isGameLost
+        lost: isGameLost,
+        farewell: !isGameOver && isLastGuessIncorrect
     })
 
     function renderGameStatus() {
