@@ -37,6 +37,16 @@ header > p {
     color: #8E8E8E;
 }
 
+section.timer {
+    color: #F9F4DA;
+    margin-bottom: 20px;
+    text-align: end;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
 section.game-status {
     display: flex;
     flex-direction: column;

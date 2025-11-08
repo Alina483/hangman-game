@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { languages } from "./languages"
 import clsx from "clsx";
 import { getFarewellText, getRandomWord } from "./utils";
@@ -20,6 +20,7 @@ export default function Hangman() {
     const isGameOver = isGameWon || isGameLost
     const lastGuessedLetter = guessedLetters[guessedLetters.length - 1]
     const isLastGuessIncorrect = lastGuessedLetter && !currentWord.includes(lastGuessedLetter)
+    const [seconds, setSeconds] = useState(0);
 
     const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
@@ -118,8 +119,19 @@ export default function Hangman() {
         setGuessedLetters([]);
     }
 
+    useEffect(() => {
+        if (isGameOver) return;
+        const interval = setInterval(() => {
+            setSeconds(prev => prev + 1);
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [isGameOver]);
+
     return (
         <main>
+            <section className="timer">
+                <h2>Timer: {seconds}s</h2>
+            </section>
             {isGameWon && <Confetti />}
             <header>
                 <h1>Hangman</h1>
