@@ -3,12 +3,12 @@ import { languages } from "./languages"
 import clsx from "clsx";
 import { getFarewellText, getRandomWord } from "./utils";
 import Confetti from "react-confetti";
+import TimerIcon from "./TimerIcon";
 
 /**
  * 
  * Display remaining guesses
  * Display some other annimation when user lost (maybe rain or smth)
- * Add timer
  */
 export default function Hangman() {
     const [currentWord, setCurrentWord] = useState(() =>getRandomWord());
@@ -130,7 +130,10 @@ export default function Hangman() {
     return (
         <main>
             <section className="timer">
-                <h2>Timer: {seconds}s</h2>
+                <span>
+                    <TimerIcon size={24} color="#F9F4DA" />
+                    <span>{seconds}s</span>
+                </span>
             </section>
             {isGameWon && <Confetti />}
             <header>
