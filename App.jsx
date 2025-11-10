@@ -4,10 +4,10 @@ import clsx from "clsx";
 import { getFarewellText, getRandomWord } from "./utils";
 import Confetti from "react-confetti";
 import TimerIcon from "./TimerIcon";
+import StormScene from "./StormScene";
 
 /**
  * 
- * Display remaining guesses
  * Display some other annimation when user lost (maybe rain or smth)
  */
 export default function Hangman() {
@@ -21,6 +21,7 @@ export default function Hangman() {
     const lastGuessedLetter = guessedLetters[guessedLetters.length - 1]
     const isLastGuessIncorrect = lastGuessedLetter && !currentWord.includes(lastGuessedLetter)
     const [seconds, setSeconds] = useState(0);
+    const remainingGuesses = numGuessesLeft - wrongGuessCount;
 
     const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
@@ -130,12 +131,18 @@ export default function Hangman() {
     return (
         <main>
             <section className="timer">
-                <span>
-                    <TimerIcon size={24} color="#F9F4DA" />
-                    <span>{seconds}s</span>
-                </span>
+                <div className="timer-stack">
+                    <span className="timer-row">
+                        <TimerIcon size={24} color="#F9F4DA" />
+                        <span>{seconds}s</span>
+                    </span>
+                    <span className="guesses-left">
+                        Guesses left: {remainingGuesses}
+                    </span>
+                </div>
             </section>
             {isGameWon && <Confetti />}
+            {isGameLost && <StormScene />}
             <header>
                 <h1>Hangman</h1>
                 <p>Guess the word in under 8 attempts to keep the programming world safe from Assembly!</p>
