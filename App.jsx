@@ -6,10 +6,6 @@ import Confetti from "react-confetti";
 import TimerIcon from "./TimerIcon";
 import StormScene from "./StormScene";
 
-/**
- * 
- * Display some other annimation when user lost (maybe rain or smth)
- */
 export default function Hangman() {
     const [currentWord, setCurrentWord] = useState(() =>getRandomWord());
     const [guessedLetters, setGuessedLetters] = useState([]);
